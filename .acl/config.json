@@ -1,0 +1,5 @@
+{
+  "cleanup_mode": "semi",
+  "cleanup_days": 30,
+  "language": "auto"
+}
