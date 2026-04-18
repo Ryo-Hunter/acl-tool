@@ -2,46 +2,86 @@
 
 > An honest meter for Claude Code — not what the AI did, but how certain it was.
 
-ACL is a Claude Code hook tool that automatically generates a calibration report at the end of every session. It shows which parts of the AI's output were certain, which were inferred, and which need human review.
+ACL is a Claude Code slash command that lets the AI analyze its own conversation and generate a calibration report — showing which responses were certain, which were inferred, and which need human review.
+
+No extra API calls. No additional cost. The AI already running in your session does the analysis.
+
+---
+
+## How it works
+
+Type `/acl` at any point in your Claude Code session:
+
+```
+── ACL 校準報告 ────────────────────────────────────
+✓ 確定    parsed input correctly, matched 3 constraints
+⚠ 推測    inferred user intent — no explicit instruction given
+✗ 需確認  assumed project structure may be wrong, please verify
+────────────────────────────────────────────────────
+校準分數：83 / 100  |  High confidence session with one assumption to verify.
+────────────────────────────────────────────────────
+```
+
+The report is also saved to `.acl/reports/` as JSON for later review.
 
 ---
 
 ## Why ACL?
 
-Most AI tools record *what* the AI did. ACL records *how confident* the AI was about what it did.
+Most AI tools record *what* the AI did. ACL records *how confident* the AI was.
 
-This is based on LDRIT's concept of **q_calibration**: an AI that can honestly assess its own uncertainty is more trustworthy than one that always sounds confident.
+This matters because the biggest problem with AI today isn't capability — it's that users can't tell when to trust the output. ACL makes the AI's uncertainty visible.
 
-```
-── ACL Report ─────────────────────────────────────
-✓ Certain      parsed input correctly, matched 3 constraints
-⚠ Uncertain    line 47 — inferred intent, no explicit instruction
-✗ Review       output depends on assumption that may be wrong
-───────────────────────────────────────────────────
-Calibration Score: 78 / 100
-```
+Built on [LDRIT](https://github.com/Ryo-Hunter/fourgods) — **q_calibration**: an AI that can honestly assess its own uncertainty is more trustworthy than one that always sounds confident.
 
 ---
 
 ## Installation
 
 ```bash
-git clone https://github.com/your-repo/acl-tool
-cd acl-tool
-pip install -r requirements.txt
+git clone https://github.com/Ryo-Hunter/acl-tool
 ```
 
-Copy the hook into your Claude Code project:
+Copy the slash command to your Claude Code project:
 
 ```bash
-cp .claude/hooks/stop_hook.py /your-project/.claude/hooks/
+cp acl-tool/.claude/commands/acl.md /your-project/.claude/commands/
 ```
+
+That's it. No API key. No dependencies.
 
 ---
 
-## Configuration
+## Usage
 
-Create `.acl/config.json` in your project root:
+In any Claude Code session, type:
+
+```
+/acl
+```
+
+Claude will analyze the current session and output a calibration report.
+
+**Reading the report:**
+
+| Symbol | Meaning | Action |
+|--------|---------|--------|
+| ✓ Certain | AI had clear evidence | Trust it |
+| ⚠ Uncertain | AI made an inference | Worth a quick check |
+| ✗ Review | AI was making assumptions | Verify before using |
+
+**Calibration Score:**
+- **80–100**: High confidence session
+- **50–79**: Some inferences made, check key outputs
+- **Below 50**: Many assumptions — review carefully
+
+---
+
+## Report storage
+
+Reports are saved to `.acl/reports/acl_{timestamp}.json` in your project.
+
+Configure cleanup behavior in `.acl/config.json`:
 
 ```json
 {
@@ -51,17 +91,11 @@ Create `.acl/config.json` in your project root:
 }
 ```
 
-| Option | Values | Default | Description |
-|--------|--------|---------|-------------|
-| `cleanup_mode` | `auto` / `semi` | `semi` | Auto-delete old reports or prompt first |
-| `cleanup_days` | integer | `30` | Reports older than N days are eligible for cleanup |
-| `language` | `auto` / `zh-TW` / `zh-CN` / `en` | `auto` | Report language |
-
----
-
-## Output
-
-Reports are saved to `.acl/reports/acl_{session_id}_{timestamp}.json`.
+| Option | Values | Default |
+|--------|--------|---------|
+| `cleanup_mode` | `auto` / `semi` | `semi` — prompts before deleting |
+| `cleanup_days` | integer | `30` |
+| `language` | `auto` / `zh-TW` / `en` | `auto` — detects from environment |
 
 ---
 
@@ -69,10 +103,9 @@ Reports are saved to `.acl/reports/acl_{session_id}_{timestamp}.json`.
 
 ACL is built on [LDRIT](https://github.com/Ryo-Hunter/fourgods) — Life-Death Recursive Intelligence Theory.
 
-Key concepts used:
-- **q_calibration**: AI's ability to honestly assess its own output quality
-- **Self-seeding**: How the AI's expressed confidence affects its next generation
-- **c_eff conflict**: When system/user/dialogue layers conflict, reliability drops
+Key concept: **q_calibration** — the degree to which an AI can honestly assess its own output quality, rather than just producing fluent responses.
+
+An AI with high q_calibration knows what it knows, knows what it's guessing, and tells you the difference.
 
 ---
 
