@@ -36,19 +36,54 @@ Built on [LDRIT](https://github.com/Ryo-Hunter/fourgods) — **q_calibration**: 
 
 ---
 
+## Requirements
+
+- [Claude Code CLI](https://claude.ai/code) — ACL is a Claude Code slash command
+- Python 3.8+
+- Git
+
 ## Installation
+
+**1. Install Python venv (Debian/Ubuntu only)**
+
+```bash
+sudo apt-get install python3-venv
+```
+
+Skip this step on macOS or Windows — venv is included by default.
+
+**2. Clone and set up**
 
 ```bash
 git clone https://github.com/Ryo-Hunter/acl-tool
+cd acl-tool
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
 ```
 
-Copy the slash command to your Claude Code project:
+**3. Copy the slash command to your Claude Code project**
 
 ```bash
-cp acl-tool/.claude/commands/acl.md /your-project/.claude/commands/
+mkdir -p /your-project/.claude/commands
+cp .claude/commands/acl.md /your-project/.claude/commands/
 ```
 
-That's it. No API key. No dependencies.
+**4. Start a new Claude Code session**
+
+Slash commands are loaded at session start. Open a new window after copying.
+
+---
+
+## Common issues
+
+**`/acl` not recognized**
+→ Open a new Claude Code window — commands load at session start.
+
+**`python3-venv` not found**
+→ Run `sudo apt-get install python3.12-venv` (replace `3.12` with your Python version).
+
+**`No module named pip`**
+→ Same fix: install `python3-venv` first, then recreate the venv.
 
 ---
 
