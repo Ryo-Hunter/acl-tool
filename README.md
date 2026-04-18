@@ -70,10 +70,12 @@ Claude will analyze the current session and output a calibration report.
 | ⚠ Uncertain | AI made an inference | Worth a quick check |
 | ✗ Review | AI was making assumptions | Verify before using |
 
-**Calibration Score:**
+**Honesty Score:**
 - **80–100**: High confidence session
 - **50–79**: Some inferences made, check key outputs
 - **Below 50**: Many assumptions — review carefully
+
+> The Honesty Score measures what LDRIT theory calls **q_calibration** — the degree to which an AI honestly knows what it knows versus what it's guessing. High fluency does not equal high honesty.
 
 ---
 
