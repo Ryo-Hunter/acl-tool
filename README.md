@@ -136,6 +136,21 @@ Configure cleanup behavior in `.acl/config.json`:
 
 ---
 
+## Why not just read the output yourself?
+
+You can — but you're reading the *result*, not the *confidence level* behind it.
+
+Claude always sounds fluent. A confident-sounding wrong answer looks identical to a confident-sounding right answer.
+
+ACL surfaces what Claude can't easily tell you in natural language:
+- "I inferred this, I wasn't told"
+- "This step has no ground truth to verify against"
+- "My certainty dropped here — you should check this"
+
+The gap between fluency and reliability is exactly what ACL is designed to close.
+
+---
+
 ## Theory
 
 ACL is built on [LDRIT](https://github.com/Ryo-Hunter/fourgods) — Life-Death Recursive Intelligence Theory.
