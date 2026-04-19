@@ -161,6 +161,14 @@ An AI with high q_calibration knows what it knows, knows what it's guessing, and
 
 ---
 
+## Roadmap
+
+- [ ] Auto-trigger mode: ACL fires automatically after long-running tasks
+- [ ] Calibration history: track Honesty Score trends across sessions
+- [ ] Team mode: shared ACL logs for multi-developer pipelines
+
+---
+
 ## License
 
 MIT
