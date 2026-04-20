@@ -97,6 +97,14 @@ In any Claude Code session, type:
 
 Claude will analyze the current session and output a calibration report.
 
+**Adding your own verdict:**
+
+```
+/acl-annotate
+```
+
+After running `/acl`, use `/acl-annotate` to mark whether you agree with the score — or whether you think it was too high or too low. ACL is a self-report tool. User annotations create an external anchor that no self-report can produce on its own. Even sparse annotation (5%) is meaningfully better than none.
+
 **Reading the report:**
 
 | Symbol | Meaning | Action |
