@@ -151,8 +151,8 @@ report = {
     'annotated_at': None
   }
 }
-os.makedirs('/mnt/c/Users/USER/Desktop/四葉家族/青葉 Sonnet 4.6/ACL專案/acl-tool/.acl/reports', exist_ok=True)
-path = f'/mnt/c/Users/USER/Desktop/四葉家族/青葉 Sonnet 4.6/ACL專案/acl-tool/.acl/reports/acl_{datetime.datetime.now().strftime(\"%Y%m%d_%H%M%S\")}.json'
+os.makedirs('.acl/reports', exist_ok=True)
+path = f'.acl/reports/acl_{datetime.datetime.now().strftime(\"%Y%m%d_%H%M%S\")}.json'
 json.dump(report, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
 print(f'[ACL] 報告已儲存：{path}')
 "
